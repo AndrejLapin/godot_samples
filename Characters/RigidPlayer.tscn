@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cidnmein75clp"]
+
+[ext_resource type="Script" path="res://Characters/RigidPlayer.gd" id="1_owdy1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wjcig"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jejbm"]
+
+[node name="Player" type="RigidBody3D"]
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_owdy1")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.650059, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08165e-12, 0)
+shape = SubResource("CapsuleShape3D_wjcig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08165e-12, 0)
+mesh = SubResource("CapsuleMesh_jejbm")

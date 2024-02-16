@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://ck6glp6ne0ef3"]
+
+[ext_resource type="PackedScene" uid="uid://cidnmein75clp" path="res://Characters/RigidPlayer.tscn" id="1_5hugg"]
+[ext_resource type="Shader" path="res://sky.gdshader" id="2_krkup"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4tip0"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g4q24"]
+points = PackedVector3Array(1.01587, 0.015873, 1.01587, -1.01587, -0.015873, -1.01587, -1.01587, 0.015873, -1.01587, 1.01587, -0.015873, -1.01587, -1.01587, -0.015873, 1.01587, -1.01587, 0.015873, 1.01587, 1.01587, 0.015873, -1.01587, 1.01587, -0.015873, 1.01587)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8smxh"]
+shader = ExtResource("2_krkup")
+shader_parameter/skyColor = Color(0.239216, 0.521569, 0.729412, 1)
+shader_parameter/bottomColor = Color(0.254902, 0.254902, 0.254902, 1)
+
+[sub_resource type="Sky" id="Sky_qwq57"]
+sky_material = SubResource("ShaderMaterial_8smxh")
+
+[sub_resource type="Environment" id="Environment_g78pn"]
+background_mode = 2
+sky = SubResource("Sky_qwq57")
+ambient_light_source = 1
+
+[node name="Gameplay" type="Node3D"]
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="World"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/Ground"]
+mesh = SubResource("PlaneMesh_4tip0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/Ground"]
+shape = SubResource("ConvexPolygonShape3D_g4q24")
+
+[node name="Player" parent="World" instance=ExtResource("1_5hugg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.06688, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.598842, 0.800867, 0, -0.800867, 0.598842, 0, 6.54804, 5.99873)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g78pn")
