@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dckqdamilxvs7"]
+
+[ext_resource type="PackedScene" uid="uid://cqgfhsbq34c2u" path="res://2D/Characters/RigidPlayer.tscn" id="1_vq8aa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kicsh"]
+size = Vector2(371, 47)
+
+[sub_resource type="SphereMesh" id="SphereMesh_r00f3"]
+radius = 1000.0
+height = 2000.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dtpvg"]
+radius = 1000.74
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a6suo"]
+radius = 1992.0
+
+[node name="World" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(533, 575)
+scale = Vector2(2.715, 2.715)
+
+[node name="PanelContainer" type="PanelContainer" parent="StaticBody2D"]
+offset_left = -186.0
+offset_top = -25.0
+offset_right = 187.0
+offset_bottom = 25.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_kicsh")
+
+[node name="Character" parent="." instance=ExtResource("1_vq8aa")]
+position = Vector2(395, 258)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+zoom = Vector2(0.4, 0.4)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(2599, -749)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D2"]
+mesh = SubResource("SphereMesh_r00f3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("CircleShape2D_dtpvg")
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D2"]
+gravity_space_override = 3
+gravity_point = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/Area2D"]
+shape = SubResource("CircleShape2D_a6suo")

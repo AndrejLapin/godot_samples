@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://ck6glp6ne0ef3"]
 
-[ext_resource type="PackedScene" uid="uid://cidnmein75clp" path="res://Characters/RigidPlayer.tscn" id="1_5hugg"]
-[ext_resource type="Shader" path="res://sky.gdshader" id="2_krkup"]
+[ext_resource type="PackedScene" uid="uid://cidnmein75clp" path="res://3D/Characters/RigidPlayer.tscn" id="1_5hugg"]
+[ext_resource type="Shader" path="res://3D/sky.gdshader" id="2_krkup"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4tip0"]
 
