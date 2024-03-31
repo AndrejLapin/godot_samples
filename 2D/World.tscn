@@ -13,12 +13,13 @@ height = 2000.0
 radius = 1000.74
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a6suo"]
-radius = 1992.0
+radius = 2500.0
 
 [node name="World" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(533, 575)
+position = Vector2(1729, -578)
+rotation = -0.195132
 scale = Vector2(2.715, 2.715)
 
 [node name="PanelContainer" type="PanelContainer" parent="StaticBody2D"]
@@ -30,14 +31,28 @@ offset_bottom = 25.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_kicsh")
 
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(1725, -1.00004)
+rotation = 1.34645
+scale = Vector2(2.715, 2.715)
+
+[node name="PanelContainer" type="PanelContainer" parent="StaticBody2D3"]
+offset_left = -186.0
+offset_top = -25.0
+offset_right = 187.0
+offset_bottom = 25.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("RectangleShape2D_kicsh")
+
 [node name="Character" parent="." instance=ExtResource("1_vq8aa")]
-position = Vector2(395, 258)
+position = Vector2(3033, -2764)
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 zoom = Vector2(0.4, 0.4)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(2599, -749)
+position = Vector2(3188, -939)
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D2"]
 mesh = SubResource("SphereMesh_r00f3")
@@ -46,8 +61,30 @@ mesh = SubResource("SphereMesh_r00f3")
 shape = SubResource("CircleShape2D_dtpvg")
 
 [node name="Area2D" type="Area2D" parent="StaticBody2D2"]
-gravity_space_override = 3
+gravity_space_override = 1
 gravity_point = true
+gravity_point_unit_distance = 1200.0
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/Area2D"]
+shape = SubResource("CircleShape2D_a6suo")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(5142, 2254)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D4"]
+mesh = SubResource("SphereMesh_r00f3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+shape = SubResource("CircleShape2D_dtpvg")
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D4"]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_unit_distance = 1200.0
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4/Area2D"]
 shape = SubResource("CircleShape2D_a6suo")

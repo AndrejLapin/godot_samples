@@ -1,9 +1,10 @@
 extends RigidBody2D
 
-const JUMP_VELOCITY: float = 500.0
-const MOVE_SPEED: float = 500.0
+const JUMP_VELOCITY: float = 1000.0
+const MOVE_SPEED: float = 1000.0
 const FLOOR_ANGLE_THRESHOLD: float = 0.01
 const floor_check_distance: float = 0.01
+const MAX_ANGLE: float = deg_to_rad(60)
 
 var on_the_floor: bool = false
 
@@ -29,10 +30,16 @@ func _floor_check() -> void:
 	var params :=  PhysicsShapeQueryParameters2D.new()
 	params.shape_rid = _shape.get_rid()
 	params.transform = transform
-	params.motion = Vector2(0, -floor_check_distance)
+	params.motion = floor_check_distance * _gravity_vector
+	print(params.motion)
 	params.exclude = [self.get_rid()]
-	var result = space_state.intersect_shape(params, 1)
-	on_the_floor = result.size() > 0
+	var result = space_state.get_rest_info(params)
+	on_the_floor = false
+	if result.size() > 0:
+		var shape_collision_angle := (-_gravity_vector).angle_to(result.normal)
+		on_the_floor = shape_collision_angle <= MAX_ANGLE and \
+						shape_collision_angle >= -MAX_ANGLE
+	#on_the_floor = result.size() > 0
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
@@ -47,9 +54,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	print(_gravity_vector.angle_to(Vector2(0, 1)))
 	rotate(-_gravity_vector.angle_to(Vector2(0, 1)))
-	print((Vector2.ONE - _gravity_vector))
 	
 	_floor_check()
 	
