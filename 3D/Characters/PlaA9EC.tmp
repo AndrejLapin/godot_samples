@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6r1lmupoo74v"]
+
+[ext_resource type="Script" path="res://3D/Characters/PlanetPlayer.gd" id="1_bmdw0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ot1d5"]
+albedo_color = Color(0.819608, 0.247059, 0.129412, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1sbey"]
+material = SubResource("StandardMaterial3D_ot1d5")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wjcig"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jejbm"]
+
+[node name="PlanetPlayer" type="RigidBody3D"]
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_bmdw0")
+
+[node name="Shnoz" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.479384, -0.374087)
+mesh = SubResource("BoxMesh_1sbey")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.650059, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0, 5.70336)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08165e-12, 0)
+shape = SubResource("CapsuleShape3D_wjcig")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08165e-12, 0)
+mesh = SubResource("CapsuleMesh_jejbm")

@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://b1pf8rgusgdsk"]
+
+[ext_resource type="Script" path="res://3D/Characters/SimplePlanetCharacter.gd" id="1_x3aji"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0l0fm"]
+
+[sub_resource type="Sky" id="Sky_kyrmn"]
+sky_material = SubResource("ProceduralSkyMaterial_0l0fm")
+
+[sub_resource type="Environment" id="Environment_xnj8a"]
+background_mode = 2
+sky = SubResource("Sky_kyrmn")
+
+[sub_resource type="SphereMesh" id="SphereMesh_onb6h"]
+radius = 50.0
+height = 100.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rsjvk"]
+radius = 50.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5avum"]
+radius = 75.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8fyl"]
+albedo_color = Color(0.380392, 0.74902, 0.345098, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jg56h"]
+material = SubResource("StandardMaterial3D_r8fyl")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pe26f"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fefo8"]
+
+[node name="PlanetWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xnj8a")
+
+[node name="RigidBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 15.0968, 0, -12.4591)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_onb6h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_rsjvk")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D"]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Area3D"]
+shape = SubResource("SphereShape3D_5avum")
+
+[node name="RigidBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 19.6899, -2.8764, 11.882)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
+mesh = SubResource("SphereMesh_onb6h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+shape = SubResource("SphereShape3D_rsjvk")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D2"]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2/Area3D"]
+shape = SubResource("SphereShape3D_5avum")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.89381, 0.448446, 0, -0.448446, 0.89381, 307.575, 73.3666, 61.7409)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.651, 0.545, -3.335)
+
+[node name="SimplePlanetCharacter" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.65573, 8.05809, -12.6262)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_x3aji")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SimplePlanetCharacter"]
+mesh = SubResource("CapsuleMesh_jg56h")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SimplePlanetCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.479053, 0.316126)
+mesh = SubResource("BoxMesh_pe26f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SimplePlanetCharacter"]
+shape = SubResource("CapsuleShape3D_fefo8")

@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://det4loyuqlsy5"]
+
+[ext_resource type="PackedScene" uid="uid://b6r1lmupoo74v" path="res://3D/Characters/PlanetPlayer.tscn" id="1_2brvs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0l0fm"]
+
+[sub_resource type="Sky" id="Sky_kyrmn"]
+sky_material = SubResource("ProceduralSkyMaterial_0l0fm")
+
+[sub_resource type="Environment" id="Environment_xnj8a"]
+background_mode = 2
+sky = SubResource("Sky_kyrmn")
+
+[sub_resource type="SphereMesh" id="SphereMesh_onb6h"]
+radius = 50.0
+height = 100.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rsjvk"]
+radius = 50.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5avum"]
+radius = 75.0
+
+[node name="PlanetWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xnj8a")
+
+[node name="RigidBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_onb6h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_rsjvk")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D"]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/Area3D"]
+shape = SubResource("SphereShape3D_5avum")
+
+[node name="RigidBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8037, 0, 117.392)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
+mesh = SubResource("SphereMesh_onb6h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
+shape = SubResource("SphereShape3D_rsjvk")
+
+[node name="Area3D" type="Area3D" parent="RigidBody3D2"]
+gravity_space_override = 1
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2/Area3D"]
+shape = SubResource("SphereShape3D_5avum")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.89381, 0.448446, 0, -0.448446, 0.89381, 307.575, 73.3666, 61.7409)
+
+[node name="PlanetPlayer" parent="." instance=ExtResource("1_2brvs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 53.0138, 0)
+floor_max_angle = 1.0472

@@ -44,14 +44,15 @@ func _physics_process(_delta: float) -> void:
 	y_rotate_amount = 0.0
 	
 	if Input.is_action_just_pressed("jump") and on_the_floor:
-		linear_velocity.y = JUMP_VELOCITY
+		self.apply_central_impulse(JUMP_VELOCITY * mass * Vector3.UP)
+		#linear_velocity.y = JUMP_VELOCITY
 	
-	if on_the_floor:
-		var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if direction:
-			linear_velocity.x = direction.x * MOVE_SPEED
-			linear_velocity.z = direction.z * MOVE_SPEED
-		else:
-			linear_velocity.x = 0.0
-			linear_velocity.z = 0.0
+	#if on_the_floor:
+		#var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		#var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		#if direction:
+			#linear_velocity.x = direction.x * MOVE_SPEED
+			#linear_velocity.z = direction.z * MOVE_SPEED
+		#else:
+			#linear_velocity.x = 0.0
+			#linear_velocity.z = 0.0
