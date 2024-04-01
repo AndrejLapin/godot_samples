@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 const JUMP_VELOCITY: float = 1000.0
-const MOVE_SPEED: float = 1000.0
+const MOVE_SPEED: float = 500.0
 const FLOOR_ANGLE_THRESHOLD: float = 0.01
 const floor_check_distance: float = 0.01
 const MAX_ANGLE: float = deg_to_rad(60)
@@ -9,10 +9,12 @@ const MAX_ANGLE: float = deg_to_rad(60)
 var on_the_floor: bool = false
 
 var _gravity_vector: Vector2 = Vector2.ZERO
+var _jump_vector: Vector2 = Vector2.ZERO
+var _jump_pressed_frames: int = 0
 
 var _shape: Shape2D = null
 
-@export_range(0, 180, 0.001, "radians_as_degrees") var floor_max_angle: float = deg_to_rad(150)
+@export_range(0, 180, 0.001, "radians_as_degrees") var floor_max_angle: float = deg_to_rad(60)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -44,28 +46,35 @@ func _floor_check() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	_gravity_vector = state.total_gravity.normalized()
-	return
+	rotate(-_gravity_vector.angle_to(Vector2(0, 1)) - rotation)
+	
 	on_the_floor = false
 	for index in state.get_contact_count():
-		var localized_collision = state.get_contact_local_position(index) - get_position()
-		var floor_angle: float = -localized_collision.angle_to(Vector2.UP)
-		if floor_angle >= floor_max_angle + FLOOR_ANGLE_THRESHOLD:
+		var contact_normal = state.get_contact_local_normal(index)
+		var floor_angle: float = abs((-_gravity_vector).angle_to(contact_normal))
+		if floor_angle <= floor_max_angle:
 			on_the_floor = true
+	#_floor_check()
+	
+	#velocity_to_apply
+	
+		#linear_velocity += -JUMP_VELOCITY * _gravity_vector
 
 
 func _physics_process(_delta: float) -> void:
-	rotate(-_gravity_vector.angle_to(Vector2(0, 1)))
-	
-	_floor_check()
-	
-	if on_the_floor:
+	if on_the_floor and _jump_pressed_frames <= 0:
 		var input_dir: Vector2 = Input.get_axis("move_left", "move_right") * \
 														_gravity_vector.orthogonal()
-		var direction = (input_dir)
-		if direction:
-			linear_velocity = direction * MOVE_SPEED
-		else:
-			linear_velocity = (linear_velocity * _gravity_vector.orthogonal()).limit_length(0)
+		#apply_central_force(3000.0 * input_dir * mass)
+		print(_gravity_vector.orthogonal())
+		print(_jump_vector)
+		linear_velocity = input_dir * MOVE_SPEED + linear_velocity * _jump_vector
+		#_jump_vector = Vector2.ZERO
 	
+	_jump_pressed_frames -= 1
 	if Input.is_action_just_pressed("jump") and on_the_floor:
 		linear_velocity += -JUMP_VELOCITY * _gravity_vector
+		_jump_pressed_frames = 2
+		#on_the_floor = false
+		#_jump_vector = _gravity_vector
+		#apply_central_impulse(-JUMP_VELOCITY * _gravity_vector)
